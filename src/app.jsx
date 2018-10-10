@@ -46,7 +46,7 @@ class App extends Component {
   }
 
   async getMyState () {
-    let { state, send } = await connect('66e968c68a6e845f94911190bccd096d9303a7a76185f8e9e46a266115e7b762')
+    let { state, send } = await connect('4834b869e8e5e7d1ccf97687e1948fcce946d495f2d9e0b05b16073e60a3654c')
     return {state, send}
   }
 
@@ -56,17 +56,10 @@ class App extends Component {
 
   sendTransaction (address, amount) {
     return new Promise ((resolve, reject) => {
-      this.state.client.send({
-        from: [
-            // tx inputs. each must include an amount:
-            {amount: Number(amount), type: 'coin', senderAddress: 'ting'}
-        ],
-        to: [
-            // tx outputs. sum of amounts must equal sum of amounts of inputs.
-            {amount: Number(amount), type: 'coin', receiverAddress: address}
-        ]
-      })
+      console.log(Number(amount))
+      this.state.client.send({ type: 'transaction', from: 'ting', to: address, amount: Number(amount)})
       .then(async (result) => {
+        console.log(result)
         resolve()
       })
     })
@@ -76,16 +69,7 @@ class App extends Component {
     console.log('BUY BOND !')
     console.log('Amount :', amount)
     return new Promise ((resolve, reject) => {
-      this.state.client.send({
-        from: [
-            // tx inputs. each must include an amount:
-            {amount: Number(amount), type: 'bonds', senderAddress: 'ting'}
-        ],
-        to: [
-            // tx outputs. sum of amounts must equal sum of amounts of inputs.
-            {amount: Number(amount), type: 'bonds', receiverAddress: ''}
-        ]
-      })
+      this.state.client.send({amount: Number(amount), type: 'bonds', from: 'ting'})
       .then(async (result) => {
         resolve()
       })
@@ -96,16 +80,7 @@ class App extends Component {
     console.log('VOTE !')
 
     return new Promise ((resolve, reject) => {
-      this.state.client.send({
-        from: [
-            // tx inputs. each must include an amount:
-            {amount: Number(stake), type: 'vote', price: Number(price), senderAddress: 'ting'}
-        ],
-        to: [
-            // tx outputs. sum of amounts must equal sum of amounts of inputs.
-            {amount: Number(stake), type: 'vote', price: Number(price)}
-        ]
-      })
+      this.state.client.send({amount: Number(stake), type: 'vote', price: Number(price), from: 'ting'})
       .then(async (result) => {
         resolve()
       })
@@ -116,16 +91,7 @@ class App extends Component {
     console.log('AIRDROP !')
 
     return new Promise ((resolve, reject) => {
-      this.state.client.send({
-        from: [
-            // tx inputs. each must include an amount:
-            { type: 'airdrop', senderAddress: 'ting'}
-        ],
-        to: [
-            // tx outputs. sum of amounts must equal sum of amounts of inputs.
-            { type: 'airdrop'}
-        ]
-      })
+      this.state.client.send({ type: 'airdrop', from: 'ting'})
       .then(async (result) => {
         resolve()
       })
