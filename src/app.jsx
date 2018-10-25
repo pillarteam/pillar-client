@@ -46,7 +46,7 @@ class App extends Component {
   }
 
   async getMyState () {
-    let { state, send } = await connect('4834b869e8e5e7d1ccf97687e1948fcce946d495f2d9e0b05b16073e60a3654c')
+    let { state, send } = await connect('67ae03a6d72fcbd67cbf01b8fe0237cc7f749054262c94809683c4dcdeaf1457')
     return {state, send}
   }
 
